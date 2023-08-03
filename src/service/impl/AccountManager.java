@@ -1,7 +1,6 @@
 package service.impl;
 import model.Account;
 import system.MenuProduct;
-
 import java.io.*;
 import java.util.*;
 public class AccountManager implements Serializable{
@@ -70,30 +69,29 @@ public class AccountManager implements Serializable{
             MenuProduct.menuProduct();
         }
     }
-
     public void delete(String[] str) {
         try {
-        for (int i = 0; i < account.size(); i++) {
-            if (account.get(i).getAccount().equals(str[0]) && account.get(i).getPassword().equals(str[1])){
-                if (account.get(i).getRole().equals("Admin")){
-                    System.out.println("account cannot be deleted!");
-                    break;
-                } if (account.get(i).getRole().equals("User")){
-                    System.out.println("Are you sure you want to delete?");
-                    System.out.println("1. yes");
-                    System.out.println("2. no");
-                    int choice = Integer.parseInt(input.nextLine());
-                    if (choice == 1){
-                        account.remove(i);
-                        write(account);
-                        account = read();
-                        System.out.println("delete success!");
+            for (int i = 0; i < account.size(); i++) {
+                if (account.get(i).getAccount().equals(str[0]) && account.get(i).getPassword().equals(str[1])){
+                    if (account.get(i).getRole().equals("Admin")){
+                        System.out.println("account cannot be deleted!");
                         break;
+                    } if (account.get(i).getRole().equals("User")){
+                        System.out.println("Are you sure you want to delete?");
+                        System.out.println("1. yes");
+                        System.out.println("2. no");
+                        int choice = Integer.parseInt(input.nextLine());
+                        if (choice == 1){
+                            account.remove(i);
+                            write(account);
+                            account = read();
+                            System.out.println("delete success!");
+                            break;
+                        }
                     }
                 }
             }
-        }
-    } catch (Exception e){
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }

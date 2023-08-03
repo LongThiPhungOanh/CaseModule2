@@ -1,16 +1,18 @@
 package model;
-
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 
 public class Bill implements Serializable {
     private static int INDEX = 1;
+    private Customer customer;
     private int codeBill;
-    private String customerName;
+    private Data customerName;
     private String DateOfPayment;
     private double totalMoney;
 
-    public Bill(String customerName, String dateOfPayment, double totalMoney) {
+    public Bill(Customer customer, Data customerName, String dateOfPayment, double totalMoney) {
         this.codeBill = INDEX++;
+        this.customer = customer;
         this.customerName = customerName;
         DateOfPayment = dateOfPayment;
         this.totalMoney = totalMoney;
@@ -28,11 +30,11 @@ public class Bill implements Serializable {
         this.codeBill = codeBill;
     }
 
-    public String getCustomerName() {
+    public Data getCustomerName() {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
+    public void setCustomerName(Data customerName) {
         this.customerName = customerName;
     }
 
@@ -52,12 +54,21 @@ public class Bill implements Serializable {
         this.totalMoney = totalMoney;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+
     @Override
     public String toString() {
         return "Bill{" +
-                "INDEX=" + INDEX +
-                ", codeBill='" + codeBill + '\'' +
-                ", customerName='" + customerName + '\'' +
+                "customer=" + customer +
+                ", codeBill=" + codeBill +
+                ", customerName=" + customerName +
                 ", DateOfPayment='" + DateOfPayment + '\'' +
                 ", totalMoney=" + totalMoney +
                 '}';

@@ -1,30 +1,20 @@
 package service.impl;
 import model.Product;
 import model.SizeClothes;
-import service.CRUD;
 
 import java.io.*;
 import java.util.*;
 
-public class ProductManager implements CRUD<Product>, Serializable{
+public class ProductManager implements Serializable{
     private final Scanner input = new Scanner(System.in);
     List<Product> productList;
-    List<SizeClothes> sizeClothes;
+
     private final static String PATH = "src/file/Product";
     public ProductManager(){
         productList = new ArrayList<>();
-        sizeClothes = new ArrayList<>();
-        sizeClothes = this.returnSize();
         productList = read();
     }
-    public List<SizeClothes> returnSize(){
-        List<SizeClothes> size = new ArrayList<>();
-        size.add(new SizeClothes("150 - 155cm", "40 - 45", "size S"));
-        size.add(new SizeClothes("156 - 160cm", "43 - 46", "size M"));
-        size.add(new SizeClothes("161 - 165cm", "46 - 53", "size L"));
-        size.add(new SizeClothes("166 - 170cm", "53 - 57", "size XL"));
-        return size;
-    }
+
     public Product returnObject(){
         Product product = null;
         try {
@@ -43,7 +33,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
             System.out.println(e.getMessage());
         } return product;
     }
-    @Override
     public void add(Product product) {
         if (product != null){
             productList.add(product);
@@ -81,7 +70,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
             System.out.println(e.getMessage());
         }
     }
-    @Override
     public void delete() {
         try {
             System.out.println("Id product you to want delete!");
@@ -105,7 +93,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
             System.out.println(e.getMessage());
         }
     }
-    @Override
     public void search() {
         //tim theo name
         try {
@@ -161,7 +148,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
             System.out.println("no product");
         }
     }
-    @Override
     public List<Product> read() {
         List<Product> products = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(PATH))) {
@@ -172,8 +158,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
         }
         return products;
     }
-
-    @Override
     public void write(List<Product> obj) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(PATH))) {
             objectOutputStream.writeObject(obj);
