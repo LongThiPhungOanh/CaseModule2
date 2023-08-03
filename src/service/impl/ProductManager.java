@@ -88,7 +88,7 @@ public class ProductManager implements CRUD<Product>, Serializable{
                     System.out.println("are you sure you want to delete?");
                     System.out.println("1. Yes");
                     System.out.println("2. No");
-                    int choice = Integer.parseInt(input.nextLine());
+                    int choice = input.nextInt();
                     if (choice == 1){
                         productList.remove(i);
                         write(productList);
@@ -149,6 +149,15 @@ public class ProductManager implements CRUD<Product>, Serializable{
             total += (product.getPrice() * product.getQuantity());
         }
         System.out.println("All money in stock is: " + total);
+    }
+    public void showProduct(){
+        if (productList.size() > 0){
+            for (Product value: productList ) {
+                System.out.println(value);
+            }
+        } else {
+            System.out.println("no product");
+        }
     }
     @Override
     public List<Product> read() {

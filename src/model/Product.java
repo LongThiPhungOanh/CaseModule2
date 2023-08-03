@@ -8,7 +8,7 @@ public class Product implements Serializable {
     private String name;
     private double price;
     private int quantity;
-    private SizeClothes describe;
+    private SizeClothes sizeClothes;
     private String category;
     private String fabric;
     public static int INDEX = 0;
@@ -19,12 +19,12 @@ public class Product implements Serializable {
         this.name = name;
         this.quantity = quantity;
     }
-    public Product(String name, double price, int quantity, SizeClothes describe, String category, String fabric) {
+    public Product(String name, double price, int quantity, SizeClothes sizeClothes, String category, String fabric) {
         this.id = INDEX++;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.describe = describe;
+        this.sizeClothes = sizeClothes;
         this.category = category;
         this.fabric = fabric;
     }
@@ -94,11 +94,11 @@ public class Product implements Serializable {
     }
 
     public SizeClothes getDescribe() {
-        return describe;
+        return sizeClothes;
     }
 
     public void setDescribe(SizeClothes describe) {
-        this.describe = describe;
+        this.sizeClothes = sizeClothes;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class Product implements Serializable {
                 ", name = '" + name + '\'' +
                 ", price = " + price +
                 ", quantity = " + quantity +
-                ", describe = '" + describe + '\'' +
+                ", sizeClothes = '" + sizeClothes + '\'' +
                 ", category = " + category +
                 ", fabric = '" + fabric + '\'' +
                 '}';

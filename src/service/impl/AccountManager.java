@@ -1,5 +1,7 @@
 package service.impl;
 import model.Account;
+import system.MenuProduct;
+
 import java.io.*;
 import java.util.*;
 public class AccountManager implements Serializable{
@@ -59,13 +61,13 @@ public class AccountManager implements Serializable{
         }
         return check;
     }
-    public void displayTest(int check){
+    public void logIn(int check){
         if (check == -1){
-            System.out.println("k co tai khoan nha ");
+            System.out.println("don't have this account!");
         } if (check == 0){
             System.out.println("ng dung");
         } if (check == 1){
-            System.out.println("admin");
+            MenuProduct.menuProduct();
         }
     }
 
