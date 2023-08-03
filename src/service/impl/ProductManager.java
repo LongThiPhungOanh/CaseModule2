@@ -1,5 +1,4 @@
 package service.impl;
-
 import model.Product;
 import model.SizeClothes;
 import service.CRUD;
@@ -16,7 +15,7 @@ public class ProductManager implements CRUD<Product>, Serializable{
         productList = new ArrayList<>();
         sizeClothes = new ArrayList<>();
         sizeClothes = this.returnSize();
-        productList.add(new Product("Váy body", 120000,20,"Váy","Vải mịn"));
+        productList = read();
     }
     public List<SizeClothes> returnSize(){
         List<SizeClothes> size = new ArrayList<>();
@@ -58,8 +57,9 @@ public class ProductManager implements CRUD<Product>, Serializable{
     public void edit(Product product) {
         try {
             if (product != null) {
+                boolean check = true;
                 System.out.println("Input id you to want edit");
-                int id = input.nextInt();
+                int id = Integer.parseInt(input.nextLine());
                 for (Product value : productList) {
                     if (id == value.getId()) {
                         value.setName(product.getName());
@@ -68,8 +68,11 @@ public class ProductManager implements CRUD<Product>, Serializable{
                         value.setCategory(product.getCategory());
                         value.setFabric(product.getFabric());
                         System.out.println("success!");
+                        check = false;
                         break;
                     }
+                } if (check){
+                    System.out.println("Id not found!");
                 }
             } else {
                 System.out.println("Invalid product!");
@@ -82,13 +85,13 @@ public class ProductManager implements CRUD<Product>, Serializable{
     public void delete() {
         try {
             System.out.println("Id product you to want delete!");
-            int delete = input.nextInt();
+            int delete = Integer.parseInt(input.nextLine());
             for (int i = 0; i < productList.size(); i++){
                 if (delete == productList.get(i).getId()){
                     System.out.println("are you sure you want to delete?");
                     System.out.println("1. Yes");
                     System.out.println("2. No");
-                    int choice = input.nextInt();
+                    int choice = Integer.parseInt(input.nextLine());
                     if (choice == 1){
                         productList.remove(i);
                         write(productList);
@@ -102,7 +105,6 @@ public class ProductManager implements CRUD<Product>, Serializable{
             System.out.println(e.getMessage());
         }
     }
-
     @Override
     public void search() {
         //tim theo name

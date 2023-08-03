@@ -7,7 +7,6 @@ import java.util.List;
 public class BillManager implements CRUD<Bill>,Serializable {
     private final static String PATH= "src/file/Bill";
 
-
     @Override
     public void delete() {
 

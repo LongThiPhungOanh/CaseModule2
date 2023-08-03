@@ -16,7 +16,7 @@ public class MenuProduct {
             System.out.println("7. show product");
             System.out.println("0. Exit");
             System.out.println("you choice: ");
-            int choice = input.nextInt();
+            int choice = Integer.parseInt(input.nextLine());
             switch (choice) {
                 case 1 -> productManager.add(productManager.returnObject());
                 case 2 -> productManager.edit(productManager.returnObject());

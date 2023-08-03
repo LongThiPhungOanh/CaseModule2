@@ -13,7 +13,7 @@ public class Main {
                 System.out.println("3. delete account");
                 System.out.println("0. Exit");
                 System.out.println("you choice: ");
-                int choice = scanner.nextInt();
+                int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> accountManager.logIn(accountManager.login(accountManager.returnAccount()));
                     case 2 -> accountManager.add(accountManager.returnAccount());
