@@ -4,11 +4,9 @@ import model.SizeClothes;
 
 import java.io.*;
 import java.util.*;
-
 public class ProductManager implements Serializable{
     private final Scanner input = new Scanner(System.in);
     List<Product> productList;
-
     private final static String PATH = "src/file/Product";
     public ProductManager(){
         productList = new ArrayList<>();

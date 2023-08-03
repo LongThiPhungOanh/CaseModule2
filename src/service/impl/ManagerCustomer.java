@@ -5,7 +5,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 public class ManagerCustomer implements Serializable{
     private final static String PATH= "src/file/Customer";
     private final Scanner input = new Scanner(System.in);
@@ -26,7 +25,7 @@ public class ManagerCustomer implements Serializable{
         return size;
     }
     public void showSizeClothes(){
-        System.out.println("Choice you size");
+        System.out.println("Customer size");
         for (int i = 0; i < sizeClothes.size(); i++) {
             System.out.println(i + 1 + ". " + sizeClothes.get(i));
         }
@@ -60,10 +59,11 @@ public class ManagerCustomer implements Serializable{
           System.out.println(e.getMessage());
       } return customer;
   }
-
     public void add(Customer customer) {
         if (customer != null){
             customerList.add(customer);
+            writeCustomer(customerList);
+            customerList = readCustomer();
             System.out.println("success!");
         } else {
             System.out.println("Invalid information");
@@ -72,30 +72,81 @@ public class ManagerCustomer implements Serializable{
     public void edit(Customer customer){
         boolean check = true;
         try {
-            System.out.println("Name you to want edit");
-            String name = input.nextLine();
-            for (Customer value: customerList) {
-                if (value.getName().equals(name)){
-                    value.setName(customer.getName());
-                    value.setAge(customer.getAge());
-                    value.setSize(customer.getSize());
-                    value.setNumberPhone(customer.getNumberPhone());
-                    check = false;
-                    System.out.println("success!");
-                    break;
+            if (customer != null){
+                System.out.println("Name you to want edit");
+                String name = input.nextLine();
+                for (Customer value: customerList) {
+                    if (value.getName().equals(name)){
+                        value.setName(customer.getName());
+                        value.setAge(customer.getAge());
+                        value.setSize(customer.getSize());
+                        value.setNumberPhone(customer.getNumberPhone());
+                        check = false;
+                        writeCustomer(customerList);
+                        customerList = readCustomer();
+                        System.out.println("success!");
+                        break;
+                    }
+                } if (check){
+                    System.out.println("Name not found");
                 }
-            } if (check){
+            } else {
                 System.out.println("Invalid information");
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
-    public void delete(){};
-    public void search() {
-
+    public void delete() {
+        try {
+            System.out.println("Name you to want delete");
+            String name = input.nextLine();
+            for (int i = 0; i < customerList.size(); i++) {
+                if (customerList.get(i).getName().equals(name)) {
+                    System.out.println("You sure you want to delete?");
+                    System.out.println("1. yes");
+                    System.out.println("2. Noo");
+                    int choice = Integer.parseInt(input.nextLine());
+                    if (choice == 1) {
+                        customerList.remove(i);
+                        writeCustomer(customerList);
+                        customerList = readCustomer();
+                        System.out.println("delete success!");
+                        break;
+                    }
+                }
+            }
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
-
+    public void searchByName(){
+        try {
+            boolean check = true;
+            System.out.println("Input name you want to search: ");
+            String search = input.nextLine();
+            for (Customer customer : customerList) {
+                if (customer.getName().toLowerCase().contains(search.toLowerCase())) {
+                    System.out.println(customer);
+                    check = false;
+                }
+            }
+            if (check) {
+                System.out.println("Not exist product have name contains this word!");
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void displayCustomer(){
+        if (customerList.size() > 0){
+            for (Customer value: customerList) {
+                System.out.println(value);
+            }
+        } else {
+            System.out.println("no customer");
+        }
+    }
     public List<Customer> readCustomer() {
         List<Customer> customers = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(PATH))) {

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 public class BillManager implements Serializable {
     private final static String PATH= "src/file/Bill";
-
-
     public void delete() {
 
     }

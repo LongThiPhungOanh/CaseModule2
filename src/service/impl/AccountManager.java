@@ -1,5 +1,6 @@
 package service.impl;
 import model.Account;
+import system.MenuManager;
 import system.MenuProduct;
 import java.io.*;
 import java.util.*;
@@ -66,7 +67,7 @@ public class AccountManager implements Serializable{
         } if (check == 0){
             System.out.println("ng dung");
         } if (check == 1){
-            MenuProduct.menuProduct();
+            MenuManager.menuManager();
         }
     }
     public void delete(String[] str) {
