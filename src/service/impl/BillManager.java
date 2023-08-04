@@ -1,13 +1,18 @@
 package service.impl;
 import model.Bill;
-
+import model.Product;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-public class BillManager implements Serializable {
+public class BillManager extends PurchaseManager implements Serializable {
     private final static String PATH= "src/file/Bill";
-    public void delete() {
+    List<Bill> billList;
+    public BillManager(){
+        billList = new ArrayList<>();
+        billList = readBill();
+    }
 
+    public void delete() {
     }
 
 
@@ -17,11 +22,11 @@ public class BillManager implements Serializable {
 
 
 
-    public void add(Bill bill) {
-
+    public void addBill(Product product) {
+        
     }
 
-       public List<Bill> read() {
+       public List<Bill> readBill() {
         List<Bill> bills = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(PATH))) {
             Object object = objectInputStream.readObject();
@@ -31,7 +36,7 @@ public class BillManager implements Serializable {
         }
         return bills;
     }
-     public void write(List<Bill> obj) {
+     public void writeBill(List<Bill> obj) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(PATH))) {
             objectOutputStream.writeObject(obj);
         } catch (IOException e) {

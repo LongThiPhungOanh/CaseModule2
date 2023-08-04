@@ -13,7 +13,7 @@ public class AccountManager implements Serializable{
         account = read();
     }
     public String[] returnAccount(){
-        String[] returnAccount = new String[2];
+        String[] returnAccount = new String[3];
         try {
             System.out.println("UserName");
             String account = input.nextLine();
@@ -103,7 +103,7 @@ public class AccountManager implements Serializable{
             accounts = (List<Account>) object;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             account.add(new Account("Admin", "123", "Admin"));
-            account.add(new Account("Oanh", "123"));
+            account.add(new Account("Oanh", "123", 10000));
             write(account);
             accounts = account;
             System.out.println(e.getMessage());

@@ -7,11 +7,11 @@ public class MenuPurchase {
         PurchaseManager purchaseManager = new PurchaseManager();
         boolean check = true;
         while (check) {
-            System.out.println("1. display all product");
+            System.out.println("1. Purchase");
             System.out.println("0. Exit");
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice){
-                case 1 -> purchaseManager.display();
+                case 1 -> purchaseManager.choice();
                 case 0 -> check = false;
             }
         }

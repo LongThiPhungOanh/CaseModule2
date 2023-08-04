@@ -63,7 +63,9 @@ public class ManagerCustomer implements Serializable{
           int age = Integer.parseInt(input.nextLine());
           System.out.println("Input NumberPhone");
           String numberPhone = input.nextLine();
-          customer = new Customer(name, age, size, numberPhone);
+          System.out.println("Recharge");
+          double money = Double.parseDouble(input.nextLine());
+          customer = new Customer(name, age, size, numberPhone,money);
       } catch (Exception e){
           System.out.println(e.getMessage());
       } return customer;

@@ -9,10 +9,10 @@ public class Bill implements Serializable {
     private Data customerName;
     private String DateOfPayment;
     private double totalMoney;
-    private int review;
+    private int review = 0;
     public Bill(Customer customer, Data customerName, String dateOfPayment, double totalMoney, int review) {
-        this.customer = customer;
         this.codeBill = INDEX++;
+        this.customer = customer;
         this.customerName = customerName;
         DateOfPayment = dateOfPayment;
         this.totalMoney = totalMoney;
@@ -72,14 +72,12 @@ public class Bill implements Serializable {
     }
 
 
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "customer=" + customer +
-                ", codeBill=" + codeBill +
-                ", customerName=" + customerName +
-                ", DateOfPayment='" + DateOfPayment + '\'' +
-                ", totalMoney=" + totalMoney +
-                '}';
+    public Bill(Customer customer, int codeBill, Data customerName, String dateOfPayment, double totalMoney, int review) {
+        this.customer = customer;
+        this.codeBill = codeBill;
+        this.customerName = customerName;
+        DateOfPayment = dateOfPayment;
+        this.totalMoney = totalMoney;
+        this.review = review;
     }
 }
