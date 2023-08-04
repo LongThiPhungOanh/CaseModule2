@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private static long serialUID = 12345678;
     private long id;
     private String name;
     private double price;
@@ -85,15 +84,6 @@ public class Product implements Serializable {
     public void setFabric(String fabric) {
         this.fabric = fabric;
     }
-
-    public static long getSerialUID() {
-        return serialUID;
-    }
-
-    public static void setSerialUID(long serialUID) {
-        Product.serialUID = serialUID;
-    }
-
     public SizeClothes getDescribe() {
         return sizeClothes;
     }

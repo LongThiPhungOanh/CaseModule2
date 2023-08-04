@@ -9,13 +9,22 @@ public class Bill implements Serializable {
     private Data customerName;
     private String DateOfPayment;
     private double totalMoney;
-
-    public Bill(Customer customer, Data customerName, String dateOfPayment, double totalMoney) {
-        this.codeBill = INDEX++;
+    private int review;
+    public Bill(Customer customer, Data customerName, String dateOfPayment, double totalMoney, int review) {
         this.customer = customer;
+        this.codeBill = INDEX++;
         this.customerName = customerName;
         DateOfPayment = dateOfPayment;
         this.totalMoney = totalMoney;
+        this.review = review;
+    }
+
+    public int getReview() {
+        return review;
+    }
+
+    public void setReview(int review) {
+        this.review = review;
     }
 
     public int getINDEX() {

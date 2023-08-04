@@ -1,7 +1,7 @@
 package service.impl;
 import model.Account;
 import system.MenuManager;
-import system.MenuProduct;
+import system.MenuPurchase;
 import java.io.*;
 import java.util.*;
 public class AccountManager implements Serializable{
@@ -65,7 +65,7 @@ public class AccountManager implements Serializable{
         if (check == -1){
             System.out.println("don't have this account!");
         } if (check == 0){
-            System.out.println("ng dung");
+            MenuPurchase.menuPurchase();
         } if (check == 1){
             MenuManager.menuManager();
         }

@@ -10,6 +10,15 @@ public class ManagerCustomer implements Serializable{
     private final Scanner input = new Scanner(System.in);
     List<Customer> customerList;
     List<SizeClothes> sizeClothes;
+
+    public List<SizeClothes> getSizeClothes() {
+        return sizeClothes;
+    }
+
+    public void setSizeClothes(List<SizeClothes> sizeClothes) {
+        this.sizeClothes = sizeClothes;
+    }
+
     public ManagerCustomer(){
         customerList = new ArrayList<>();
         sizeClothes = new ArrayList<>();
@@ -120,9 +129,9 @@ public class ManagerCustomer implements Serializable{
             System.out.println(e.getMessage());
         }
     }
-    public void searchByName(){
+    public boolean searchByName(){
+        boolean check = true;
         try {
-            boolean check = true;
             System.out.println("Input name you want to search: ");
             String search = input.nextLine();
             for (Customer customer : customerList) {
@@ -136,7 +145,7 @@ public class ManagerCustomer implements Serializable{
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
-        }
+        } return check;
     }
     public void displayCustomer(){
         if (customerList.size() > 0){

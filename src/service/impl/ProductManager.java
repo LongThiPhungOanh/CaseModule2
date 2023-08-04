@@ -5,6 +5,7 @@ import model.SizeClothes;
 import java.io.*;
 import java.util.*;
 public class ProductManager implements Serializable{
+    //private static long serialVersionUID = 12345678;
     private final Scanner input = new Scanner(System.in);
     List<Product> productList;
     private final static String PATH = "src/file/Product";
