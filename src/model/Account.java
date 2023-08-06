@@ -6,7 +6,6 @@ public class Account implements Serializable {
     private String password;
     private String role = "User";
 
-
     public Account(String account, String password, String role) {
         this.account = account;
         this.password = password;

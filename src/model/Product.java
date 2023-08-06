@@ -7,10 +7,29 @@ public class Product implements Serializable {
     private String name;
     private double price;
     private int quantity;
+
+    public SizeClothes getSizeClothes() {
+        return sizeClothes;
+    }
+
+    public void setSizeClothes(SizeClothes sizeClothes) {
+        this.sizeClothes = sizeClothes;
+    }
+
     private SizeClothes sizeClothes;
     private String category;
     private String fabric;
     public static int INDEX = 0;
+
+    public Product(long id, String name, double price, int quantity, SizeClothes sizeClothes, String category, String fabric) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.sizeClothes = sizeClothes;
+        this.category = category;
+        this.fabric = fabric;
+    }
 
     public Product() {}
 

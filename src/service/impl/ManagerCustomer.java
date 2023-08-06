@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class ManagerCustomer implements Serializable{
+    public final static long serialVersionUID = 594344082;
     private final static String PATH= "src/file/Customer";
     private final Scanner input = new Scanner(System.in);
     List<Customer> customerList;
     List<SizeClothes> sizeClothes;
-
     public List<SizeClothes> getSizeClothes() {
         return sizeClothes;
     }
@@ -164,7 +164,7 @@ public class ManagerCustomer implements Serializable{
             Object object = objectInputStream.readObject();
             customers = (List<Customer>) object;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return customers;
     }

@@ -47,7 +47,10 @@ public class AccountManager implements Serializable{
             System.out.println(e.getMessage());
         }
     }
-    public int login(String[] str) {
+    public String[] login(String[] str) {
+        return str;
+    }
+    public void logIn(String[] str){
         int check = -1;
         for (Account value : account) {
             if (value.getAccount().equals(str[0]) && value.getPassword().equals(str[1])){
@@ -59,13 +62,10 @@ public class AccountManager implements Serializable{
                 }
             }
         }
-        return check;
-    }
-    public void logIn(int check){
         if (check == -1){
             System.out.println("don't have this account!");
         } if (check == 0){
-            MenuPurchase.menuPurchase();
+            MenuPurchase.menuPurchase(str[0]);
         } if (check == 1){
             MenuManager.menuManager();
         }
@@ -103,10 +103,10 @@ public class AccountManager implements Serializable{
             accounts = (List<Account>) object;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             account.add(new Account("Admin", "123", "Admin"));
-            account.add(new Account("Oanh", "123", 10000));
+            account.add(new Account("Oanh", "123"));
             write(account);
             accounts = account;
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return accounts;
     }

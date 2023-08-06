@@ -1,46 +1,59 @@
 package service.impl;
 import model.Bill;
 import model.Product;
+import java.util.Date;
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-public class BillManager extends PurchaseManager implements Serializable {
+public class BillManager implements Serializable {
     private final static String PATH= "src/file/Bill";
-    List<Bill> billList;
-    public BillManager(){
-        billList = new ArrayList<>();
-        billList = readBill();
-    }
-
-    public void delete() {
-    }
+    List<Bill> bills = readBill();
 
 
-    public void search() {
-
-    }
-
-
-
-    public void addBill(Product product) {
-        
-    }
-
-       public List<Bill> readBill() {
-        List<Bill> bills = new ArrayList<>();
+    public List<Bill> readBill() {
+        List<Bill> billList = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(PATH))) {
             Object object = objectInputStream.readObject();
-            bills = (List<Bill>) object;
+            billList = (List<Bill>) object;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
+        return billList;
+    }
+
+    public List<Bill> getBills(){
         return bills;
     }
-     public void writeBill(List<Bill> obj) {
+
+    public void listBill(){
+        if (bills.size() > 0){
+            for (Bill value: bills ) {
+                System.out.println(value);
+            }
+        } else {
+            System.out.println("no bill");
+        }
+    }
+
+    public void add(Bill bill){
+        if(bill != null){
+            bills.add(bill);
+            write(bills);
+            System.out.println("<--------------Added bill success!!!-------------->");
+        }else {
+            System.out.println("<--------------Failed!!!-------------->");
+        }
+    }
+
+    public void write(List<Bill> obj) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(PATH))) {
             objectOutputStream.writeObject(obj);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
+
+
 }

@@ -1,46 +1,63 @@
 package service.impl;
+import model.Bill;
 import model.Product;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+
 public class PurchaseManager extends ProductManager{
     private final Scanner input = new Scanner(System.in);
+    private final static String PATH= "src/file/Bill";
+
+    private BillManager billManager = new BillManager();
+    List<Bill> billList;
+
+    Map<Product, String> productMap = new HashMap<Product, String>();
     ManagerCustomer managerCustomer;
     public PurchaseManager(){
         managerCustomer = new ManagerCustomer();
+        billList = billManager.readBill();
     }
     public void display(){
-        try {
+        if(productList.size() > 0){
+            System.out.println("<--------------------------------------Product List-------------------------------------->");
             for (Product value: productList) {
                 System.out.println(value.toString());
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("<---------------------------------------------------------------------------------------->");
+        }else {
+            System.out.println("<-------------------List is empty!!!------------------->");
+            System.out.println();
         }
     }
     public void choice() {
-        display();
-        int choiceSize;
-        try {
-            System.out.println("Input your clothing size");
-            managerCustomer.showSizeClothes();
-            choiceSize = Integer.parseInt(input.nextLine());
-            System.out.println("How many products to buy?");
-            int product = Integer.parseInt(input.nextLine());
-            if (product == 1) {
-                System.out.println("Input product id you want to buy");
-                int id = Integer.parseInt(input.nextLine());
-                if (id >= 0 && id < productList.size()) {
-                    payNow(id, choiceSize);
-                }
-            } if (product > 1) {
-                cart(choiceSize,product);
-            }if (product < 1){
-                System.out.println("product id is not correct ");
+        String option = "1";
+        while (!option.equals("0")){
+            display();
+            System.out.println("Please enter ID of the product which you want to buy: ");
+            int id = Integer.parseInt(input.nextLine());
+            if(id < 0 || id > productList.size()-1){
+                System.out.println("<--------------------Have no this ID!!!-------------------->");
+                continue;
             }
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("Please enter quantity: ");
+            String quantity = input.nextLine();
+            managerCustomer.showSizeClothes();
+            int size =  Integer.parseInt(input.nextLine());
+            if (size > 0 && size < 5){
+                Product product = productList.get(id);
+                product.setSizeClothes(managerCustomer.getSizeClothes().get(size-1));
+                productMap.put(product, quantity);
+                System.out.println("<--------------------Added to cart!!!<--------------------");
+            }else {
+                System.out.println("<--------------------Have no this size!!!-------------------->");
+            }
+            System.out.println("|-----Menu------|");
+            System.out.println("|    1. Buy     |");
+            System.out.println("|    0. Back    |");
+            System.out.println("|---------------|");
+            option = input.nextLine();
         }
+
     }
     public boolean confirm() {
         boolean check = false;
@@ -55,86 +72,107 @@ public class PurchaseManager extends ProductManager{
             System.out.println(e.getMessage());
         } return check;
     }
-    public Product payNow(int id,int size) {
-        Product product = null;
-        try {
-            System.out.println("the total amount you have to pay is: " + productList.get(id).getPrice());
-            System.out.println("Are you sure you want to pay?");
-            if (confirm()){
-                System.out.println("the total amount you have to pay is: " + (productList.get(id).getPrice() * 80 / 100));
-                product = new Product(productList.get(id).getName(), productList.get(id).getPrice(),
-                        productList.get(id).getQuantity(), managerCustomer.getSizeClothes().get(size - 1),
-                        productList.get(id).getCategory(), productList.get(id).getFabric());
-                System.out.println(product);
-                productList.get(id).setQuantity(productList.get(id).getQuantity() - 1);
-                if (pay(productList.get(id).getPrice())){
-                    write(productList);
-                    productList = read();
-                }
-            }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        } return product;
-    }
-    public List<Product> cart(int size, int length){
-        List<Product> productsList = new ArrayList<>();
-        double total = 0;
-        try {
-            for (int i = 0; i < length; i++) {
-                display();
-                System.out.println("Input product id you want to buy");
-                int id = Integer.parseInt(input.nextLine());
-                productsList.add(new Product(productList.get(id).getName(), productList.get(id).getPrice(),
-                        productList.get(id).getQuantity(), managerCustomer.getSizeClothes().get(size - 1),
-                        productList.get(id).getCategory(), productList.get(id).getFabric()));
-                total += productList.get(id).getPrice();
-                productList.get(id).setQuantity(productList.get(id).getQuantity() - 1);
-                System.out.println("successfully added to cart");
-                System.out.println("Product :" + productList.get(id).getName() + " , "  + " Price: " + productList.get(id).getPrice());
-                System.out.println("the sum of all money is: " + total);
-            }
-            System.out.println("the total amount you have to pay is: " + total);
-                if (pay(total)){
-                    write(productList);
-                    productList = read();
-                }
 
+
+    public double totalMoney(List<Product> products){
+        double total = 0;
+        if (products.size() > 0) {
+            for (Product value : products) {
+                total += value.getPrice();
+            }
+        }else {
+            System.out.println("no product");
+        } return total;
+    }
+
+    public String[] returnCustomerInformation(){
+        String[] strings = new String[2];
+        try {
+            System.out.println("input name");
+            String name = input.nextLine();
+            strings[0] = name;
+            System.out.println("input phone number");
+            String numberPhone = input.nextLine();
+            strings[1] = numberPhone;
         } catch (Exception e){
             System.out.println(e.getMessage());
-        } return productsList;
+        } return strings;
     }
-    public boolean pay(double total){
-        boolean checkQuantity = false;
-        try {
-            System.out.println("1. cash ");
-            System.out.println("2. card payment");
-            int choice = Integer.parseInt(input.nextLine());
-            if (choice == 1){
-                System.out.println("thank you here is your bill");
-                checkQuantity = true;
-            } if (choice == 2){
-                System.out.println("input name");
-                String name = input.nextLine();
-                System.out.println("input phone number");
-                String numberPhone = input.nextLine();
-                boolean check = true;
-                for (int i = 0; i < managerCustomer.customerList.size(); i++) {
-                    if (managerCustomer.customerList.get(i).getName().equals(name) && managerCustomer.customerList.get(i).getNumberPhone().equals(numberPhone)){
-                        managerCustomer.customerList.get(i).setMoney(managerCustomer.customerList.get(i).getMoney() - total);
-                        managerCustomer.writeCustomer(managerCustomer.customerList);
-                        managerCustomer.readCustomer();
-                        check = false;
-                        checkQuantity = true;
-                    }
-                } if (check){
-                    System.out.println("name or phone number not found");
-                }
-                System.out.println("thank you here is your bill");
-            } else {
-                System.out.println("incorrect information");
-            }
-        }catch (Exception e){
+
+    public void writeBill(List<Bill> obj) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(PATH))) {
+            objectOutputStream.writeObject(obj);
+        } catch (IOException e) {
             System.out.println(e.getMessage());
-        } return checkQuantity;
+        }
+    }
+
+    public void showCart(String account){
+        Set<Product> set = productMap.keySet();
+        if(!set.isEmpty()){
+            System.out.println("<-------------------Product List------------------->");
+            for (Product key : set) {
+                System.out.println("Product: " + key + " quantity" + productMap.get(key));
+            }
+            System.out.println("<-------------------------------------------------->");
+            System.out.println();
+        }else {
+            System.out.println("<-------------------Card is empty!!!------------------->");
+            System.out.println();
+        }
+        pay(account);
+    }
+
+    public void pay(String account){
+        String option = "1";
+        while (!option.equals("0")){
+            System.out.println("|--------Menu--------|");
+            System.out.println("|        1. Pay      |");
+            System.out.println("|        2. My Bill  |");
+            System.out.println("|        0. Back     |");
+            System.out.println("|--------------------|");
+            System.out.println("Your option: ");
+            option = input.nextLine();
+            if (option.equals("1")){
+                if(productMap.size() > 0){
+                    double total = 0;
+                    Set<Product> set = productMap.keySet();
+                    for (Product key : set) {
+                        total += key.getPrice()* Double.parseDouble(productMap.get(key));
+                    }
+                    String name = account;
+                    int id = billList.size();
+                    Bill bill = new Bill(id, name, total, productMap);
+                    billManager.add(bill);
+                    for(Product p: productList){
+                        Set<Product> setP = productMap.keySet();
+                        for (Product key : setP) {
+                            if(key.getId() == p.getId()){
+                                p.setQuantity(p.getQuantity() - Integer.parseInt(productMap.get(key)));
+                                break;
+                            }
+                        }
+                    }
+                    super.write(productList);
+                    productMap.clear();
+                }else {
+                    System.out.println("<---------------Cart is empty!!!---------------->");
+                }
+            }else if(option.equals("2")){
+                List<Bill> myBill = billManager.getBills();
+                boolean isEmpty = true;
+                System.out.println("-------------List Bill-------------");
+                for (Bill bill: myBill){
+                    if (bill.getName().equals(account)){
+                        System.out.println(bill);
+                        isEmpty = false;
+                    }
+                }
+                if(isEmpty){
+                    System.out.println("<---------Have no data!!!---------->");
+                }
+                    System.out.println("<---------------------------------->");
+            }
+        }
     }
 }

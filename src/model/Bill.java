@@ -1,83 +1,71 @@
 package model;
-import javax.xml.crypto.Data;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bill implements Serializable {
-    private static int INDEX = 1;
-    private Customer customer;
-    private int codeBill;
-    private Data customerName;
-    private String DateOfPayment;
-    private double totalMoney;
-    private int review = 0;
-    public Bill(Customer customer, Data customerName, String dateOfPayment, double totalMoney, int review) {
-        this.codeBill = INDEX++;
-        this.customer = customer;
-        this.customerName = customerName;
-        DateOfPayment = dateOfPayment;
-        this.totalMoney = totalMoney;
-        this.review = review;
+    private int id;
+    private String name;
+    private double total;
+    private String createDate = LocalDateTime.now().toString();
+    private Map<Product, String> mapProduct = new HashMap<>();
+
+    public Bill(int id, String name, double total, Map<Product, String> mapProduct) {
+        this.id = id;
+        this.name = name;
+        this.total = total;
+        this.mapProduct = mapProduct;
     }
 
-    public int getReview() {
-        return review;
+    public int getId() {
+        return id;
     }
 
-    public void setReview(int review) {
-        this.review = review;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getINDEX() {
-        return INDEX;
+    public String getName() {
+        return name;
     }
 
-    public int getCodeBill() {
-        return codeBill;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCodeBill(int codeBill) {
-        this.codeBill = codeBill;
+    public double getTotal() {
+        return total;
     }
 
-    public Data getCustomerName() {
-        return customerName;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public void setCustomerName(Data customerName) {
-        this.customerName = customerName;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public String getDateOfPayment() {
-        return DateOfPayment;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public void setDateOfPayment(String dateOfPayment) {
-        DateOfPayment = dateOfPayment;
+    public Map<Product, String> getMapProduct() {
+        return mapProduct;
     }
 
-    public double getTotalMoney() {
-        return totalMoney;
+    public void setMapProduct(Map<Product, String> mapProduct) {
+        this.mapProduct = mapProduct;
     }
 
-    public void setTotalMoney(double totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-
-    public Bill(Customer customer, int codeBill, Data customerName, String dateOfPayment, double totalMoney, int review) {
-        this.customer = customer;
-        this.codeBill = codeBill;
-        this.customerName = customerName;
-        DateOfPayment = dateOfPayment;
-        this.totalMoney = totalMoney;
-        this.review = review;
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", total=" + total +
+                ", createDate=" + createDate.substring(0, 19) +
+                ", mapProduct=" + mapProduct +
+                '}';
     }
 }

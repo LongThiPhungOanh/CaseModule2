@@ -1,6 +1,7 @@
 package model;
 import java.io.Serializable;
 public class Customer implements Serializable {
+    public final static long serialVersionUID = 594344082;
     private String name;
     private int age;
     private SizeClothes size;

@@ -27,7 +27,8 @@ public class ProductManager implements Serializable{
             String category = input.nextLine();
             System.out.println("Input fabric");
             String fabric = input.nextLine();
-            product = new Product(name,price,quantity,category,fabric);
+            long id = productList.size();
+            product = new Product(id,name,price,quantity,null,category,fabric);
         } catch (Exception e){
             System.out.println(e.getMessage());
         } return product;
