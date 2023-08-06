@@ -5,7 +5,6 @@ public class SizeClothes implements Serializable {
    private String height;
    private String weight;
    private String size;
-
     public SizeClothes(String height, String weight, String size) {
         this.height = height;
         this.weight = weight;

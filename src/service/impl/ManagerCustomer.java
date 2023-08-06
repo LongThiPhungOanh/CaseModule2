@@ -63,9 +63,7 @@ public class ManagerCustomer implements Serializable{
           int age = Integer.parseInt(input.nextLine());
           System.out.println("Input NumberPhone");
           String numberPhone = input.nextLine();
-          System.out.println("Recharge");
-          double money = Double.parseDouble(input.nextLine());
-          customer = new Customer(name, age, size, numberPhone,money);
+          customer = new Customer(name, age, size, numberPhone);
       } catch (Exception e){
           System.out.println(e.getMessage());
       } return customer;
@@ -131,7 +129,7 @@ public class ManagerCustomer implements Serializable{
             System.out.println(e.getMessage());
         }
     }
-    public boolean searchByName(){
+    public void searchByName(){
         boolean check = true;
         try {
             System.out.println("Input name you want to search: ");
@@ -147,7 +145,7 @@ public class ManagerCustomer implements Serializable{
             }
         } catch (Exception e){
             System.out.println(e.getMessage());
-        } return check;
+        }
     }
     public void displayCustomer(){
         if (customerList.size() > 0){

@@ -1,27 +1,21 @@
 package service.impl;
 import model.Bill;
-import model.Product;
-import java.util.Date;
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 public class BillManager implements Serializable {
     private final static String PATH= "src/file/Bill";
     List<Bill> bills = readBill();
-
-
     public List<Bill> readBill() {
         List<Bill> billList = new ArrayList<>();
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(PATH))) {
             Object object = objectInputStream.readObject();
             billList = (List<Bill>) object;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
-            //System.out.println(e.getMessage());
+           // System.out.println(e.getMessage());
         }
         return billList;
     }
-
     public List<Bill> getBills(){
         return bills;
     }
@@ -53,7 +47,4 @@ public class BillManager implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-
-
-
 }

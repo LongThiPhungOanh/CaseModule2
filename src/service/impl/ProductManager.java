@@ -1,7 +1,5 @@
 package service.impl;
 import model.Product;
-import model.SizeClothes;
-
 import java.io.*;
 import java.util.*;
 public class ProductManager implements Serializable{

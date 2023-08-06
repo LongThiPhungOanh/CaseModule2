@@ -6,13 +6,11 @@ public class Customer implements Serializable {
     private int age;
     private SizeClothes size;
     private String numberPhone;
-    private double money;
-    public Customer(String name, int age, SizeClothes size, String numberPhone, double money) {
+    public Customer(String name, int age, SizeClothes size, String numberPhone) {
         this.name = name;
         this.age = age;
         this.size = size;
         this.numberPhone = numberPhone;
-        this.money = money;
     }
 
     public String getName() {
@@ -47,14 +45,6 @@ public class Customer implements Serializable {
         this.numberPhone = numberPhone;
     }
 
-    public double getMoney() {
-        return money;
-    }
-
-    public void setMoney(double money) {
-        this.money = money;
-    }
-
     @Override
     public String toString() {
         return "Customer{" +
@@ -62,7 +52,6 @@ public class Customer implements Serializable {
                 ", age=" + age +
                 ", size=" + size +
                 ", numberPhone='" + numberPhone + '\'' +
-                ", money=" + money +
                 '}';
     }
 }
