@@ -1,5 +1,5 @@
 package system;
-import service.impl.PurchaseManager;
+import service.PurchaseManager;
 import java.util.Scanner;
 public class MenuPurchase {
     public static void menuPurchase(String str){

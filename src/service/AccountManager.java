@@ -1,4 +1,4 @@
-package service.impl;
+package service;
 import model.Account;
 import system.MenuManager;
 import system.MenuPurchase;

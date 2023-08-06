@@ -1,5 +1,5 @@
 package system;
-import service.impl.ManagerCustomer;
+import service.ManagerCustomer;
 import java.util.Scanner;
 public class MenuCustomer {
     public static void menuCustomer(){
@@ -8,11 +8,15 @@ public class MenuCustomer {
         boolean check = true;
         while (check){
             try {
-                System.out.println("1. Add Customer");
-                System.out.println("2. Edit Customer");
-                System.out.println("3. Delete Customer");
-                System.out.println("4. Search by name");
-                System.out.println("5. show all customer");
+                System.out.println("|-----------Menu---------|");
+                System.out.println("|  1. Add Customer       |");
+                System.out.println("|  2. Edit Customer      |");
+                System.out.println("|  3. Delete Customer    |");
+                System.out.println("|  4. Search by name     |");
+                System.out.println("|  5. show all customer  |");
+                System.out.println("|  0. Back               |");
+                System.out.println("|------------------------|");
+
                 System.out.println("0. Back");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {

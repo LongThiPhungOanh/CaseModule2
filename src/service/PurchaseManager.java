@@ -1,4 +1,4 @@
-package service.impl;
+package service;
 import model.Bill;
 import model.Product;
 import java.util.*;

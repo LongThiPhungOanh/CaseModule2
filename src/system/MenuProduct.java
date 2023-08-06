@@ -1,5 +1,5 @@
 package system;
-import service.impl.ProductManager;
+import service.ProductManager;
 import java.util.Scanner;
 public class MenuProduct {
     private static final Scanner input = new Scanner(System.in);

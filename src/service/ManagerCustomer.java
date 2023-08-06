@@ -1,4 +1,4 @@
-package service.impl;
+package service;
 import model.Customer;
 import model.SizeClothes;
 import java.io.*;

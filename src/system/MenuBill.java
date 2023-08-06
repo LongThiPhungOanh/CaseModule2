@@ -1,5 +1,5 @@
 package system;
-import service.impl.BillManager;
+import service.BillManager;
 import java.util.Scanner;
 public class MenuBill {
     public static void menuBill(){
