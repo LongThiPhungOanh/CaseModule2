@@ -17,7 +17,9 @@ public class PurchaseManager extends ProductManager{
             if (productList.size() > 0) {
                 System.out.println("<--------------------------------------Product List-------------------------------------->");
                 for (Product value : productList) {
-                    System.out.println(value.toString());
+                    if(value.getDeleteYn().equals("N")){
+                        System.out.println(value);
+                    }
                 }
                 System.out.println("<---------------------------------------------------------------------------------------->");
             } else {
@@ -30,8 +32,8 @@ public class PurchaseManager extends ProductManager{
     }
     public void choice() {
         String option = "1";
+        try {
         while (!option.equals("0")) {
-            try {
                 display();
                 System.out.println("Please enter ID of the product which you want to buy: ");
                 int id = Integer.parseInt(input.nextLine());
@@ -56,58 +58,11 @@ public class PurchaseManager extends ProductManager{
                 System.out.println("|    0. Back    |");
                 System.out.println("|---------------|");
                 option = input.nextLine();
-            } catch (Exception e){
-                System.out.println(e.getMessage());
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
-//    public boolean confirm() {
-//        boolean check = false;
-//        try {
-//            System.out.println("1. yes");
-//            System.out.println("2. no");
-//            int choice = Integer.parseInt(input.nextLine());
-//            if (choice == 1){
-//                check = true;
-//            }
-//        } catch (Exception e){
-//            System.out.println(e.getMessage());
-//        } return check;
-//    }
-//
-//
-//    public double totalMoney(List<Product> products){
-//        double total = 0;
-//        if (products.size() > 0) {
-//            for (Product value : products) {
-//                total += value.getPrice();
-//            }
-//        }else {
-//            System.out.println("no product");
-//        } return total;
-//    }
-//
-//    public String[] returnCustomerInformation(){
-//        String[] strings = new String[2];
-//        try {
-//            System.out.println("input name");
-//            String name = input.nextLine();
-//            strings[0] = name;
-//            System.out.println("input phone number");
-//            String numberPhone = input.nextLine();
-//            strings[1] = numberPhone;
-//        } catch (Exception e){
-//            System.out.println(e.getMessage());
-//        } return strings;
-//    }
-//
-//    public void writeBill(List<Bill> obj) {
-//        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(PATH))) {
-//            objectOutputStream.writeObject(obj);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
     public void showCart(String account){
         Set<Product> set = productMap.keySet();
         try {
@@ -147,7 +102,7 @@ public class PurchaseManager extends ProductManager{
                             total += key.getPrice() * Double.parseDouble(productMap.get(key));
                         }
                         String name = account;
-                        int id = billList.size();
+                        int id = billManager.getBills().size();
                         Bill bill = new Bill(id, name, total, productMap);
                         billManager.add(bill);
                         for (Product p : productList) {

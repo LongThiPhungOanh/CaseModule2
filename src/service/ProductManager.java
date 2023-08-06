@@ -3,7 +3,6 @@ import model.Product;
 import java.io.*;
 import java.util.*;
 public class ProductManager implements Serializable{
-    //private static long serialVersionUID = 12345678;
     private final Scanner input = new Scanner(System.in);
     List<Product> productList;
     private final static String PATH = "src/file/Product";
@@ -79,7 +78,7 @@ public class ProductManager implements Serializable{
                     System.out.println("2. No");
                     int choice = Integer.parseInt(input.nextLine());
                     if (choice == 1){
-                        productList.remove(i);
+                        productList.get(i).setDeleteYn("Y");
                         write(productList);
                         productList = read();
                         System.out.println("delete success!");
@@ -133,17 +132,39 @@ public class ProductManager implements Serializable{
     public void totalMoneyAllProduct(){
         double total =  0;
         for (Product product : productList) {
-            total += (product.getPrice() * product.getQuantity());
+            if(product.getDeleteYn().equals("N")){
+                total += (product.getPrice() * product.getQuantity());
+            }
         }
         System.out.println("All money in stock is: " + total);
     }
     public void showProduct(){
-        if (productList.size() > 0){
-            for (Product value: productList ) {
-                System.out.println(value);
+        boolean check = true;
+        while(check) {
+            try {
+                System.out.println("|-----------Menu----------|");
+                System.out.println("|  1. show all product    |");
+                System.out.println("|  2. show delete product |");
+                System.out.println("|  0. back                |");
+                System.out.println("|-------------------------|");
+                int choice = Integer.parseInt(input.nextLine());
+                if (productList.size() > 0) {
+                    for (Product value : productList) {
+                        if (choice == 1 && value.getDeleteYn().equals("N")){
+                            System.out.println(value);
+                        } else if (choice == 2 && value.getDeleteYn().equals("Y")){
+                            System.out.println(value);
+                        }
+                    }
+                } else {
+                    System.out.println("no product");
+                }
+                if (choice == 0) {
+                    check = false;
+                }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
             }
-        } else {
-            System.out.println("no product");
         }
     }
     public List<Product> read() {

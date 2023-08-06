@@ -3,6 +3,17 @@ package model;
 import java.io.Serializable;
 
 public class Product implements Serializable {
+
+    private String deleteYn = "N";
+
+    public String getDeleteYn() {
+        return deleteYn;
+    }
+
+    public void setDeleteYn(String deleteYn) {
+        this.deleteYn = deleteYn;
+    }
+
     private long id;
     private String name;
     private double price;
