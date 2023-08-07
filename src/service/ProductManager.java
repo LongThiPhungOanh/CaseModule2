@@ -119,7 +119,7 @@ public class ProductManager implements Serializable{
             System.out.println("Please input again!");
         } else {
             for (Product product : productList) {
-                if (product.getPrice() < max && product.getPrice() > min) {
+                if (product.getPrice() <= max && product.getPrice() >= min) {
                     System.out.println(product);
                     check = false;
                 }
@@ -152,7 +152,9 @@ public class ProductManager implements Serializable{
                     for (Product value : productList) {
                         if (choice == 1 && value.getDeleteYn().equals("N")){
                             System.out.println(value);
-                        } else if (choice == 2 && value.getDeleteYn().equals("Y")){
+                        } else {
+                            System.out.println("No products have been deleted");
+                        } if (choice == 2 && value.getDeleteYn().equals("Y")){
                             System.out.println(value);
                         }
                     }

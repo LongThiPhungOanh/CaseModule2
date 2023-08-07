@@ -1,5 +1,6 @@
 package service;
 import model.Bill;
+import model.Customer;
 import model.Product;
 import java.util.*;
 public class PurchaseManager extends ProductManager{
@@ -17,7 +18,7 @@ public class PurchaseManager extends ProductManager{
             if (productList.size() > 0) {
                 System.out.println("<--------------------------------------Product List-------------------------------------->");
                 for (Product value : productList) {
-                    if(value.getDeleteYn().equals("N")){
+                    if(value.getDeleteYn().equals("N") && value.getQuantity() > 0){
                         System.out.println(value);
                     }
                 }
@@ -43,6 +44,10 @@ public class PurchaseManager extends ProductManager{
                 }
                 System.out.println("Please enter quantity: ");
                 String quantity = input.nextLine();
+                if (Integer.parseInt(quantity) == 0 || Integer.parseInt(quantity) < 0 || Integer.parseInt(quantity) > productList.get(id).getQuantity()) {
+                    System.out.println("<--------------Input information is incorrect!!!------------->");
+                    continue;
+                }
                 managerCustomer.showSizeClothes();
                 int size = Integer.parseInt(input.nextLine());
                 if (size > 0 && size < 5) {
@@ -85,59 +90,99 @@ public class PurchaseManager extends ProductManager{
 
     public void pay(String account){
         String option = "1";
-        while (!option.equals("0")) {
+        Set<Product> set = productMap.keySet();
+        while (!option.equals("0") && !productMap.isEmpty()) {
             try {
                 System.out.println("|--------Menu--------|");
-                System.out.println("|        1. Pay      |");
-                System.out.println("|        2. My Bill  |");
-                System.out.println("|        0. Back     |");
+                System.out.println("|      1. Pay        |");
+                System.out.println("|      0. Back       |");
                 System.out.println("|--------------------|");
-                System.out.println("Your option: ");
+                System.out.println("      Your option:    ");
                 option = input.nextLine();
-                if (option.equals("1")) {
-                    //System.out.println("Have you registered as a user yet?");
-                    if (productMap.size() > 0) {
-                        double total = 0;
-                        Set<Product> set = productMap.keySet();
-                        for (Product key : set) {
-                            total += key.getPrice() * Double.parseDouble(productMap.get(key));
-                        }
-                        String name = account;
-                        int id = billManager.getBills().size();
-                        Bill bill = new Bill(id, name, total, productMap);
-                        billManager.add(bill);
-                        for (Product p : productList) {
-                            Set<Product> setP = productMap.keySet();
-                            for (Product key : setP) {
-                                if (key.getId() == p.getId()) {
-                                    p.setQuantity(p.getQuantity() - Integer.parseInt(productMap.get(key)));
-                                    break;
-                                }
+                if (option.equals("1") ) {
+                    boolean check = false;
+                    System.out.println("Have you registered as a user yet?");
+                    System.out.println("1. yes");
+                    System.out.println("2. no");
+                    System.out.println("you choice");
+                    int choice = Integer.parseInt(input.nextLine());
+                    if (choice == 1){
+                        System.out.println("Please enter phone number to find information");
+                        String phoneNumber = input.nextLine();
+                        for (Customer value: managerCustomer.customerList) {
+                            if (phoneNumber.equals(value.getNumberPhone())){
+                                check = true;
+                                System.out.println("you get 20% off");
+                                break;
                             }
                         }
-                        super.write(productList);
-                        productMap.clear();
-                    } else {
-                        System.out.println("<---------------Cart is empty!!!---------------->");
-                    }
-                } else if (option.equals("2")) {
-                    List<Bill> myBill = billManager.getBills();
-                    boolean isEmpty = true;
-                    System.out.println("-------------List Bill-------------");
-                    for (Bill bill : myBill) {
-                        if (bill.getName().equals(account)) {
-                            System.out.println(bill);
-                            isEmpty = false;
+                        if (check){
+                            double total = 0;
+                            for (Product key : set) {
+                                total += (key.getPrice() * 80 / 100) * Double.parseDouble(productMap.get(key));
+                            }
+                            String name = account;
+                            int id = billManager.getBills().size();
+                            Bill bill = new Bill(id, name, total, productMap);
+                            billManager.add(bill);
+                            for (Product p : productList) {
+                                Set<Product> setP = productMap.keySet();
+                                for (Product key : setP) {
+                                    if (key.getId() == p.getId()) {
+                                        p.setQuantity(p.getQuantity() - Integer.parseInt(productMap.get(key)));
+                                        break;
+                                    }
+                                }
+                            }
+                            super.write(productList);
+                            productMap.clear();
+                        } else {
+                            System.out.println("Phone number not found!");
                         }
+                    } else if (choice == 2){
+                        if (productMap.size() > 0) {
+                            double total = 0;
+                            //Set<Product> set = productMap.keySet();
+                            for (Product key : set) {
+                                total += key.getPrice() * Double.parseDouble(productMap.get(key));
+                            }
+                            String name = account;
+                            int id = billManager.getBills().size();
+                            Bill bill = new Bill(id, name, total, productMap);
+                            billManager.add(bill);
+                            for (Product p : productList) {
+                                Set<Product> setP = productMap.keySet();
+                                for (Product key : setP) {
+                                    if (key.getId() == p.getId()) {
+                                        p.setQuantity(p.getQuantity() - Integer.parseInt(productMap.get(key)));
+                                        break;
+                                    }
+                                }
+                            }
+                            super.write(productList);
+                            productMap.clear();
                     }
-                    if (isEmpty) {
-                        System.out.println("<---------Have no data!!!---------->");
+                    } else {
+                        System.out.println("<-----------Cart is empty or Input information is incorrect!!!------------->");
                     }
-                    System.out.println("<---------------------------------->");
                 }
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
+        }
+    }
+    public void showBill(String account){
+        boolean isEmpty = true;
+        billList = billManager.readBill();
+        System.out.println("-------------List Bill-------------");
+        for (Bill bill : billList) {
+            if (bill.getName().equals(account)) {
+                System.out.println(bill);
+                isEmpty = false;
+            }
+        }
+        if (isEmpty) {
+            System.out.println("<---------Have no data!!!---------->");
         }
     }
 }

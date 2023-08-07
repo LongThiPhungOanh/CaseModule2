@@ -12,7 +12,7 @@ public class MenuBill {
                 System.out.println("|  1. List Bill        |");
                 System.out.println("|  0. Back             |");
                 System.out.println("|----------------------|");
-                System.out.println("You choice: ");
+                System.out.println("        You choice:     ");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> billManager.listBill();

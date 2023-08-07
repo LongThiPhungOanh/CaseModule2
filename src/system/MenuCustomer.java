@@ -16,8 +16,7 @@ public class MenuCustomer {
                 System.out.println("|  5. show all customer  |");
                 System.out.println("|  0. Back               |");
                 System.out.println("|------------------------|");
-
-                System.out.println("0. Back");
+                System.out.println("       your choice:       ");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> managerCustomer.add(managerCustomer.returnCustomer(managerCustomer.returnSize()));

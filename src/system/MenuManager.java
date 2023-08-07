@@ -13,7 +13,7 @@ public class MenuManager {
                 System.out.println("|  3. Bill Manager     |");
                 System.out.println("|  0. Back             |");
                 System.out.println("|----------------------|");
-                System.out.println("You choice: ");
+                System.out.println("        You choice:     ");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1 -> MenuProduct.menuProduct();
