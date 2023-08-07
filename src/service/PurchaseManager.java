@@ -95,6 +95,7 @@ public class PurchaseManager extends ProductManager{
                 System.out.println("Your option: ");
                 option = input.nextLine();
                 if (option.equals("1")) {
+                    //System.out.println("Have you registered as a user yet?");
                     if (productMap.size() > 0) {
                         double total = 0;
                         Set<Product> set = productMap.keySet();
