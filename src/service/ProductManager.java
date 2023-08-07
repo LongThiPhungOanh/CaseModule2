@@ -10,7 +10,6 @@ public class ProductManager implements Serializable{
         productList = new ArrayList<>();
         productList = read();
     }
-
     public Product returnObject(){
         Product product = null;
         try {
@@ -151,11 +150,11 @@ public class ProductManager implements Serializable{
                 if (productList.size() > 0) {
                     for (Product value : productList) {
                         if (choice == 1 && value.getDeleteYn().equals("N")){
+                            value.setSizeClothes(null);
                             System.out.println(value);
-                        } else {
-                            System.out.println("No products have been deleted");
-                        } if (choice == 2 && value.getDeleteYn().equals("Y")){
+                        } else if (choice == 2 && value.getDeleteYn().equals("Y")){
                             System.out.println(value);
+                            value.setSizeClothes(null);
                         }
                     }
                 } else {
@@ -167,6 +166,39 @@ public class ProductManager implements Serializable{
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
+        }
+    }
+    public void displayDeleteProduct(){
+        try {
+            for (Product value : productList) {
+                if (value.getDeleteYn().equals("Y")) {
+                    System.out.println(value);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    public void restoreProduct(){
+        displayDeleteProduct();
+        boolean check = true;
+        try {
+            System.out.println("Enter the id you want to recover data");
+            int id = Integer.parseInt(input.nextLine());
+            for (Product value: productList) {
+                if (value.getId() == id && value.getDeleteYn().equals("Y")){
+                    value.setDeleteYn("N");
+                    check = false;
+                    write(productList);
+                    productList = read();
+                    System.out.println("successful recovery");
+                    break;
+                }
+            } if (check){
+               System.out.println("Id not found!");
+           }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
     public List<Product> read() {

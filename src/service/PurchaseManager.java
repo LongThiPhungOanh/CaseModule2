@@ -19,6 +19,7 @@ public class PurchaseManager extends ProductManager{
                 System.out.println("<--------------------------------------Product List-------------------------------------->");
                 for (Product value : productList) {
                     if(value.getDeleteYn().equals("N") && value.getQuantity() > 0){
+                        value.setSizeClothes(null);
                         System.out.println(value);
                     }
                 }
@@ -180,7 +181,7 @@ public class PurchaseManager extends ProductManager{
                 System.out.println(bill);
                 isEmpty = false;
             }
-        }
+         }
         if (isEmpty) {
             System.out.println("<---------Have no data!!!---------->");
         }

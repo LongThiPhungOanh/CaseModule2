@@ -16,6 +16,7 @@ public class MenuProduct {
                 System.out.println("|        5. Search by price         |");
                 System.out.println("|        6. total money all product |");
                 System.out.println("|        7. show product            |");
+                System.out.println("|        8. restore product         |");
                 System.out.println("|        0. Exit                    |");
                 System.out.println("|-----------------------------------|");
                 System.out.println("              your choice:           ");
@@ -28,6 +29,7 @@ public class MenuProduct {
                     case 5 -> productManager.searchByPrice();
                     case 6 -> productManager.totalMoneyAllProduct();
                     case 7 -> productManager.showProduct();
+                    case 8 -> productManager.restoreProduct();
                     case 0 -> check = false;
                 }
             } catch (Exception e){
